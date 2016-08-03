@@ -7,11 +7,15 @@ var SearchForm = require('./SearchForm');
 
 var Home = React.createClass({
   getInitialState:function () {
-    return { url: 'http://localhost:3000/posts/today' }
+    return {
+      url: 'http://localhost:3000/posts/today',
+      heading: "Today's Posts" }
   },
   handleSubmitSearch: function (criteria) {
     var query = criteria.abn + '/' + criteria.date;
-    this.setState({url: 'http://localhost:3000/posts/search/' + query});
+    this.setState({
+      url: 'http://localhost:3000/posts/search/' + query,
+      heading: 'Results for ABN ' + criteria.abn + ' on ' + criteria.date});
   },
   render: function () {
     return (
@@ -22,10 +26,10 @@ var Home = React.createClass({
           <SearchForm
             onSubmitSearch={this.handleSubmitSearch} />
         </MainWrapper>
-        <h3>Today's Posts</h3>
+        <h3>{this.state.heading}</h3>
         <PostBox
           url={this.state.url}
-          pollInterval={200} />
+          pollInterval={2000} />
       </div>
     )
   }
