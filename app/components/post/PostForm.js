@@ -1,4 +1,5 @@
 var React = require('react');
+var PropTypes = React.PropTypes;
 
 var PostForm = React.createClass({
   getInitialState: function() {
@@ -50,5 +51,9 @@ var PostForm = React.createClass({
     );
   }
 });
+
+PostForm.propTypes = {
+  onPostSubmit: PropTypes.func.isRequired
+}
 
 module.exports = PostForm;
