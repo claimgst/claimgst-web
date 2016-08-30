@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  webpack:
+    build: .
+    dockerfile: Dockerfile-development
+    command: webpack-dev-server --watch --progress --inline --host=0.0.0.0
+    volumes:
+      - .:/var/app
+      - /var/app/node_modules
+    ports:
+      - 8080:8080
