@@ -1,35 +1,28 @@
-var React = require('react');
-var $ = require('jquery');
-var PostList = require('./PostList');
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import store from '../../store';
+import $ from 'jquery';
+import PostList from './PostList';
+import { fetchPosts } from '../../actions/postsAction';
 
-var PostBox = React.createClass({
-  loadPostsFromServer: function() {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
-  getInitialState: function() {
-    return {data: this.props.data || []};
-  },
-  componentDidMount: function() {
-    this.loadPostsFromServer();
-    setInterval(this.loadPostsFromServer, this.props.pollInterval);
-  },
-  render: function() {
+class PostBox extends Component {
+  componentDidMount() {
+    store.dispatch(fetchPosts('http://localhost:3000/posts/today'))
+  }
+
+  render() {
     return (
       <div className="postBox">
-        <PostList data={this.state.data} />
+        <PostList data={this.props.posts} />
       </div>
     );
   }
-});
+};
 
-module.exports = PostBox;
+const mapStateToProps = function(store) {
+  return {
+    posts: store.postsState.posts
+  };
+}
+
+export default connect(mapStateToProps)(PostBox);

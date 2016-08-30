@@ -1,17 +1,19 @@
-var React = require('react')
-var PropTypes = React.PropTypes;
+import React, { Component, PropTypes } from 'react';
 
-var SearchForm = React.createClass({
-  getInitialState: function() {
-    return {abn: '', date: ''};
-  },
-  handleAbnChange: function(e) {
-    this.setState({abn: e.target.value});
-  },
-  handleDateChange: function(e) {
-    this.setState({date: e.target.value});
-  },
-  handleSubmit: function(e) {
+class SearchForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      abn: '',
+      date: ''
+    }
+  }
+  handleChange(e) {
+    var nextState = {};
+    nextState[e.target.name] = e.target.value;
+    this.setState(nextState);
+  }
+  handleSubmit(e) {
     e.preventDefault();
     var abn = this.state.abn.trim();
     var date = this.state.date.trim();
@@ -20,18 +22,19 @@ var SearchForm = React.createClass({
     }
     this.props.onSubmitSearch({abn: abn, date: date});
     this.setState({abn: '', date: ''});
-  },
-  render: function () {
+  }
+  render() {
     return (
       <div className="row">
         <div className="col-lg-8 col-lg-offset-2">
-          <form className="form-inline" onSubmit={this.handleSubmit}>
+          <form className="form-inline" onSubmit={this.handleSubmit.bind(this)}>
             <div className="form-group">
               <div className="input-group">
                 <input
                   type="text"
                   value={this.state.abn}
-                  onChange={this.handleAbnChange}
+                  name="abn"
+                  onChange={this.handleChange.bind(this)}
                   className="form-control"
                   placeholder="Input ABN" />
               </div>
@@ -39,7 +42,8 @@ var SearchForm = React.createClass({
                 <input
                   type="date"
                   value={this.state.date}
-                  onChange={this.handleDateChange}
+                  name="date"
+                  onChange={this.handleChange.bind(this)}
                   className="form-control"
                   placeholder="date" />
               </div>
@@ -50,10 +54,10 @@ var SearchForm = React.createClass({
       </div>
     )
   }
-});
+};
 
 SearchForm.propTypes = {
   onSubmitSearch: PropTypes.func.isRequired
 }
 
-module.exports = SearchForm;
+export default SearchForm;

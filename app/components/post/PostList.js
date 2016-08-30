@@ -1,8 +1,8 @@
-var React = require('react');
-var PostItem = require('./PostItem');
+import React, { Component, PropTypes } from 'react';
+import PostItem from './PostItem';
 
-var PostList = React.createClass({
-  render: function() {
+class PostList extends Component {
+  render() {
     var postNodes = this.props.data.map(function(post) {
       return (
         <PostItem post={post} key={post.id} />
@@ -12,8 +12,12 @@ var PostList = React.createClass({
       <div className="list-group">
         {postNodes}
       </div>
-    );
+    )
   }
-});
+};
 
-module.exports = PostList;
+PostList.propTypes = {
+  data: PropTypes.array.isRequired
+}
+
+export default PostList;

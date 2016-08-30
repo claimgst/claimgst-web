@@ -1,20 +1,24 @@
-var React = require('react');
-var PropTypes = React.PropTypes;
+import React, { Component, PropTypes } from 'react';
 
-var PostForm = React.createClass({
-  getInitialState: function() {
-    return {name: '', abn: '', amount: ''};
-  },
-  handleNameChange: function(e) {
+class PostForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+     name: '',
+     abn: '',
+     amount: ''
+    }
+  }
+  handleNameChange(e) {
     this.setState({name: e.target.value});
-  },
-  handleAbnChange: function(e) {
+  }
+  handleAbnChange(e) {
     this.setState({abn: e.target.value});
-  },
-  handleAmountChange: function(e) {
+  }
+  handleAmountChange(e) {
     this.setState({amount: e.target.value});
-  },
-  handleSubmit: function(e) {
+  }
+  handleSubmit(e) {
     e.preventDefault();
     var name = this.state.name.trim();
     var abn = this.state.abn.trim();
@@ -24,8 +28,8 @@ var PostForm = React.createClass({
     }
     this.props.onPostSubmit({name: name, abn: abn, amount: amount});
     this.setState({name: '', abn: '', amount: ''});
-  },
-  render: function() {
+  }
+  render() {
     return (
       <form className="postForm" onSubmit={this.handleSubmit}>
         <input
@@ -50,10 +54,10 @@ var PostForm = React.createClass({
       </form>
     );
   }
-});
+};
 
 PostForm.propTypes = {
   onPostSubmit: PropTypes.func.isRequired
 }
 
-module.exports = PostForm;
+export default PostForm;

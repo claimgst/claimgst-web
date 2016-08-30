@@ -1,38 +1,40 @@
-var React = require('react');
-var ReactRouter = require('react-router');
-var Link = ReactRouter.Link
-var MainWrapper = require('./../MainWrapper');
-var PostBox = require('./../post/PostBox');
-var SearchForm = require('./SearchForm');
+import React, { Component } from 'react';
+import ReactRouter from 'react-router';
+import store from '../../store';
+import { searchPosts } from '../../actions/postsAction';
+import PostBox from './../post/PostBox';
+import SearchForm from './SearchForm';
 
-var Home = React.createClass({
-  getInitialState:function () {
-    return {
-      url: 'http://localhost:3000/posts/today',
-      heading: "Today's Posts" }
-  },
-  handleSubmitSearch: function (criteria) {
+class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      heading: "Today's Posts"
+    }
+  }
+
+  handleSubmitSearch(criteria) {
     var query = criteria.abn + '/' + criteria.date;
     this.setState({
-      url: 'http://localhost:3000/posts/search/' + query,
-      heading: 'Results for ABN ' + criteria.abn + ' on ' + criteria.date});
-  },
-  render: function () {
+      heading: 'Results for ABN ' + criteria.abn + ' on ' + criteria.date
+    });
+    store.dispatch(searchPosts(criteria.abn, criteria.date))
+  }
+
+  render() {
     return (
       <div className="home">
-        <MainWrapper>
+        <div className="jumbotron col-sm-12 text-center">
           <h1>Claim GST</h1>
           <p className='lead'>Write a slogan here</p>
           <SearchForm
-            onSubmitSearch={this.handleSubmitSearch} />
-        </MainWrapper>
+            onSubmitSearch={this.handleSubmitSearch.bind(this)} />
+        </div>
         <h3>{this.state.heading}</h3>
-        <PostBox
-          url={this.state.url}
-          pollInterval={2000} />
+        <PostBox />
       </div>
     )
   }
-});
+}
 
-module.exports = Home;
+export default Home;

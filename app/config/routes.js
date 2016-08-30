@@ -1,22 +1,15 @@
-var React = require('react');
-var ReactRouter = require('react-router');
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
-var hashHistory = ReactRouter.hashHistory;
-var IndexRoute = ReactRouter.IndexRoute;
-var Main = require('../components/Main');
-var Home = require('../components/home/Home');
-var Post = require('../components/Post');
-var Friend = require('../components/Friend');
+import React from 'react';
+import { ReactRouter, Router, Route, hashHistory, IndexRoute } from 'react-router';
+import MainContainer from '../containers/MainContainer';
+import Home from '../components/home/Home';
+import Post from '../components/Post';
 
-var routes = (
+let Routes = 
   <Router history={hashHistory}>
-    <Route path='/' component={Main}>
+    <Route path='/' component={MainContainer}>
       <IndexRoute component={Home} />
-      <Route path='/post' component={Post} url="http://localhost:3000/posts" pollInterval={2000} />
-      <Route path='/friend' component={Friend} />
+      <Route path='/post' component={Post} />
     </Route>
   </Router>
-);
 
-module.exports = routes;
+export default Routes;
