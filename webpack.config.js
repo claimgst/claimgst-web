@@ -14,9 +14,11 @@ module.exports = {
     path: __dirname + '/public'
   },
   module: {
-    loaders: [
-      {test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
-    ]
+    loaders: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: "babel-loader"
+    }]
   },
   plugins: [HTMLWebpackPluginConfig],
   watchOptions: {
