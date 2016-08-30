@@ -11,9 +11,13 @@ class PostBox extends Component {
   }
 
   render() {
+    const { isFetching, posts } = this.props
     return (
       <div className="postBox">
-        <PostList data={this.props.posts} />
+      {isFetching
+        ? <h2>Loading...</h2>
+        : <PostList data={posts} />
+      }
       </div>
     );
   }
@@ -21,7 +25,8 @@ class PostBox extends Component {
 
 const mapStateToProps = function(store) {
   return {
-    posts: store.postsState.posts
+    posts: store.postsState.posts,
+    isFetching: store.postsState.isFetching
   };
 }
 
