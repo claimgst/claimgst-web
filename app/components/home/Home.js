@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactRouter from 'react-router';
 import store from '../../store';
-import { searchPosts } from '../../actions/postsAction';
+import { fetchPosts } from '../../actions/postsAction';
 import PostBox from './../post/PostBox';
 import SearchForm from './SearchForm';
 
@@ -18,7 +18,7 @@ class Home extends Component {
     this.setState({
       heading: 'Results for ABN ' + criteria.abn + ' on ' + criteria.date
     });
-    store.dispatch(searchPosts(criteria.abn, criteria.date))
+    store.dispatch(fetchPosts('http://localhost:3000/posts/search/' + query))
   }
 
   render() {
