@@ -7,7 +7,7 @@ import { fetchPosts } from '../../actions/postsAction';
 
 class PostBox extends Component {
   componentDidMount() {
-    store.dispatch(fetchPosts('http://localhost:3000/posts/today'))
+    store.dispatch(fetchPosts())
   }
 
   render() {
