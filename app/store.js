@@ -5,6 +5,7 @@ import reducers from './reducers';
 
 const store = createStore(
   reducers,
+  window.devToolsExtension && window.devToolsExtension(),
   applyMiddleware(
     thunkMiddleware, // lets us dispatch() functions
     createLogger() // neat middleware that logs actions
