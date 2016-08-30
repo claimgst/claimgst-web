@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import store from '../../store';
-import $ from 'jquery';
 import PostList from './PostList';
 import { fetchPosts } from '../../actions/postsAction';
 
