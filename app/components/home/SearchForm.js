@@ -8,33 +8,32 @@ class SearchForm extends Component {
       date: ''
     }
   }
-  handleChange(e) {
+  handleInputChange(event) {
     var nextState = {};
-    nextState[e.target.name] = e.target.value;
+    nextState[event.target.name] = event.target.value;
     this.setState(nextState);
   }
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     var abn = this.state.abn.trim();
     var date = this.state.date.trim();
     if (!date || !abn) {
       return;
     }
     this.props.onSubmitSearch({abn: abn, date: date});
-    this.setState({abn: '', date: ''});
   }
   render() {
     return (
       <div className="row">
         <div className="col-lg-8 col-lg-offset-2">
-          <form className="form-inline" onSubmit={this.handleSubmit.bind(this)}>
+          <form className="form-inline">
             <div className="form-group">
               <div className="input-group">
                 <input
                   type="text"
                   value={this.state.abn}
                   name="abn"
-                  onChange={this.handleChange.bind(this)}
+                  onChange={(event) => this.handleInputChange(event)}
                   className="form-control"
                   placeholder="Input ABN" />
               </div>
@@ -43,12 +42,16 @@ class SearchForm extends Component {
                   type="date"
                   value={this.state.date}
                   name="date"
-                  onChange={this.handleChange.bind(this)}
+                  onChange={(event) => this.handleInputChange(event)}
                   className="form-control"
                   placeholder="date" />
               </div>
             </div>
-            <button className="btn btn-default" type="button" type="submit">Search</button>
+            <button
+              className="btn btn-default"
+              onClick={(event) => this.handleSubmit(event)}>
+              Search
+            </button>
           </form>
         </div>
       </div>
