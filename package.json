@@ -1,17 +1,19 @@
 {
   "name": "claimgst-web",
   "version": "1.0.0",
-  "description": "Node.js on Docker",
+  "description": "React app for claimgst",
   "scripts": {
     "start": "webpack-dev-server --watch --progress --inline --host=0.0.0.0"
   },
-  "author": "First Last <first.last@example.com>",
+  "author": "spondbob <spondbob@eamca.com>",
   "dependencies": {
     "express": "^4.13.3",
-    "jquery": "^3.1.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
-    "react-router": "^2.6.1"
+    "react-redux": "^4.4.5",
+    "react-router": "^2.6.1",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.11.4",
@@ -20,21 +22,18 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "html-webpack-plugin": "^2.22.0",
-    "react-redux": "^4.4.5",
-    "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
-    "redux-thunk": "^2.1.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/spondbob/claimgst-web.git"
+    "url": "git+ssh://git@github.com/spondbob/claimgst-web.git"
   },
   "keywords": [
     "gst",
     "react"
   ],
   "license": "ISC",
-  "homepage": "https://bitbucket.org/spondbob/claimgst-web#readme"
+  "homepage": "https://github.com/spondbob/claimgst-web"
 }
