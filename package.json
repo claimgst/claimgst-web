@@ -8,6 +8,7 @@
   "author": "spondbob <spondbob@eamca.com>",
   "dependencies": {
     "express": "^4.13.3",
+    "jwt-decode": "^2.1.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-redux": "^4.4.5",
