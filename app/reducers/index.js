@@ -4,8 +4,8 @@ import { combineReducers } from 'redux';
 import postsReducer from './postsReducer';
 
 // Combine Reducers
-var reducers = combineReducers({
-    postsState: postsReducer
+const reducers = combineReducers({
+    posts: postsReducer
 });
 
 export default reducers;

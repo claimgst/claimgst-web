@@ -23,7 +23,7 @@ class PostBox extends Component {
 };
 
 const mapStateToProps = function(store) {
-  const { posts, isFetching } = store.postsState
+  const { posts, isFetching } = store.posts
   return {
     posts,
     isFetching
