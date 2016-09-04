@@ -8,6 +8,7 @@ class SigninForm extends Component {
     const redirectRoute = this.props.location.query.next || '/dashboard';
     this.state = {
       email: '',
+      password: '',
       redirectTo: redirectRoute
     }
   }
