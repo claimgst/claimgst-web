@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signInUser } from '../../actions/authAction';
 
 class SigninForm extends Component {
   constructor(props) {
     super(props);
+    const redirectRoute = this.props.location.query.next || '/dashboard';
     this.state = {
-      email: ''
+      email: '',
+      redirectTo: redirectRoute
     }
   }
   handleInputChange(event) {
@@ -13,10 +17,14 @@ class SigninForm extends Component {
     this.setState(nextState);
   }
   handleSubmit(event) {
+    event.preventDefault();
     var email = this.state.email.trim();
-    if (!email) {
+    var password = this.state.password.trim();
+    var redirectTo = this.state.redirectTo;
+    if (!email && !password) {
       return;
     }
+    this.props.dispatch(signInUser(email, password, redirectTo));
   }
   render() {
     return (
@@ -37,7 +45,12 @@ class SigninForm extends Component {
             <div className="form-group">
               <label htmlFor="inputPassword3" className="col-sm-2 control-label">Password</label>
               <div className="col-sm-10">
-                <input type="password" className="form-control" id="inputPassword3" placeholder="Password" />
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  onChange={(event) => this.handleInputChange(event)}
+                  placeholder="Password" />
               </div>
             </div>
             <div className="form-group">
@@ -56,4 +69,10 @@ class SigninForm extends Component {
   }
 };
 
-export default SigninForm;
+const mapStateToProps = (state) => ({
+  token: state.auth.token,
+  userEmail: state.auth.userEmail,
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(SigninForm);
