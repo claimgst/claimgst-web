@@ -22,7 +22,7 @@ class SigninForm extends Component {
     var email = this.state.email.trim();
     var password = this.state.password.trim();
     var redirectTo = this.state.redirectTo;
-    if (!email && !password) {
+    if (!email || !password) {
       return;
     }
     this.props.dispatch(signInUser(email, password, redirectTo));
