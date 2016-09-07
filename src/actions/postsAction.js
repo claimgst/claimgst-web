@@ -1,12 +1,12 @@
 import * as types from '../constants/postsConst';
 
-const requestPosts = () => {
+export const requestPosts = () => {
   return {
     type: types.REQUEST_POSTS
   }
 }
 
-const receivePosts = (posts) => {
+export const receivePosts = (posts) => {
   return {
     type: types.RECEIVE_POSTS,
     posts
