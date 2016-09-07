@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/claimgst/claimgst-web.svg?branch=master)](https://travis-ci.org/claimgst/claimgst-web)
+
 claimgst-web
 ============
 
