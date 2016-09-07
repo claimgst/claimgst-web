@@ -8,6 +8,9 @@ services:
       dockerfile: Dockerfile-development
     volumes:
       - .:/var/app
-      - /var/app/node_modules
+      - node_modules:/var/app/node_modules
     ports:
       - 8080:8080
+volumes:
+  node_modules:
+    driver: local
