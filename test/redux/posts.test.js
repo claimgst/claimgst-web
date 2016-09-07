@@ -7,9 +7,9 @@ import * as types from '../../src/constants/postsConst';
 describe('[Redux] - Posts: actions', () => {
   it('should create an action when fetching posts', () => {
     const expectedAction = {
-      type: types.REQUEST_POSTS
+      type: types.FETCHING_POSTS
     }
-    expect(actions.requestPosts()).to.deep.equal(expectedAction);
+    expect(actions.fetchingPosts()).to.deep.equal(expectedAction);
   });
 
   it('should create an action when fetched the posts successfully', () => {
@@ -27,11 +27,11 @@ describe('[Redux] - Posts: actions', () => {
     });
 
     const expectedAction = {
-      type: types.RECEIVE_POSTS,
+      type: types.FETCHING_POSTS_SUCCESS,
       posts
     };
 
-    expect(actions.receivePosts(posts)).to.deep.equal(expectedAction);
+    expect(actions.fetchingPostsSuccess(posts)).to.deep.equal(expectedAction);
   });
 });
 
@@ -46,14 +46,14 @@ describe('[Redux] - Posts: reducers', () => {
     ).to.deep.equal(expectedReducer);
   });
 
-  it('should handle REQUEST_POSTS', () => {
+  it('should handle FETCHING_POSTS', () => {
     const expectedReducer = {
       posts: [],
       isFetching: true
     }
     expect(
       reducers.default(undefined, {
-        type: types.REQUEST_POSTS
+        type: types.FETCHING_POSTS
       })
     ).to.deep.equal(expectedReducer);
   });

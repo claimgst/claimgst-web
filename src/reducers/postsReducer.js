@@ -7,7 +7,7 @@ const initialState = {
 
 const postsReducer = function(state = initialState, action) {
   switch(action.type) {
-    case types.REQUEST_POSTS:
+    case types.FETCHING_POSTS:
       return Object.assign(
         {},
         state,
@@ -15,7 +15,7 @@ const postsReducer = function(state = initialState, action) {
           isFetching: true
         }
       )
-    case types.RECEIVE_POSTS:
+    case types.FETCHING_POSTS_SUCCESS:
       return Object.assign(
         {},
         state,

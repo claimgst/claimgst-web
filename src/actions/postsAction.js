@@ -1,24 +1,24 @@
 import * as types from '../constants/postsConst';
 import { fetchPosts } from '../apis/postsApi';
 
-export const requestPosts = () => {
+export const fetchingPosts = () => {
   return {
-    type: types.REQUEST_POSTS
+    type: types.FETCHING_POSTS
   }
 }
 
-export const receivePosts = (posts) => {
+export const fetchingPostsSuccess = (posts) => {
   return {
-    type: types.RECEIVE_POSTS,
+    type: types.FETCHING_POSTS_SUCCESS,
     posts
   }
 }
 
 export const loadPosts = (url) => {
   return (dispatch) => {
-    dispatch(requestPosts())
+    dispatch(fetchingPosts())
     return fetchPosts(url).then(json =>
-      dispatch(receivePosts(json))
+      dispatch(fetchingPostsSuccess(json))
     )
   }
 }
