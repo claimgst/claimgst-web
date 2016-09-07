@@ -1,6 +1,7 @@
 import { SIGNIN_USER_REQUEST, SIGNIN_USER_FAILURE, SIGNIN_USER_SUCCESS, SIGNOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA } from '../constants/authConst';
 import { push } from 'react-router-redux';
 import jwtDecode from 'jwt-decode';
+import { fetchUser } from '../apis/authApi';
 
 export function signInUserSuccess(token) {
   localStorage.setItem('token', token);
@@ -50,15 +51,7 @@ export function parseJSON(response) {
 export function signInUser(email, password, redirect="/dashboard") {
   return function(dispatch) {
     dispatch(signInUserRequest());
-    return fetch(`http://localhost:3000/users/sign_in/`, {
-      method: 'post',
-      credentials: 'include',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({email: email, password: password})
-    })
+    return fetchUser(email, password)
     // .then(checkHttpStatus)
     .then(parseJSON)
     .then(response => {
