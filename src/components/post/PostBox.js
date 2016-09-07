@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PostList from './PostList';
-import { fetchPosts } from '../../actions/postsAction';
+import { loadPosts } from '../../actions/postsAction';
 
 class PostBox extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchPosts())
+    this.props.dispatch(loadPosts())
   }
 
   render() {

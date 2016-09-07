@@ -1,4 +1,5 @@
 import * as types from '../constants/postsConst';
+import { fetchPosts } from '../apis/postsApi';
 
 export const requestPosts = () => {
   return {
@@ -13,13 +14,11 @@ export const receivePosts = (posts) => {
   }
 }
 
-export const fetchPosts = (url = 'http://localhost:3000/posts/today') => {
+export const loadPosts = (url) => {
   return (dispatch) => {
     dispatch(requestPosts())
-    return fetch(url)
-      .then(response => response.json())
-      .then(json =>
-        dispatch(receivePosts(json))
-      )
+    return fetchPosts(url).then(json =>
+      dispatch(receivePosts(json))
+    )
   }
 }
