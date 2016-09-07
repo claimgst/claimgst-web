@@ -1,7 +1,8 @@
 import * as types from '../constants/postsConst';
 
 const initialState = {
-  posts: []
+  posts: [],
+  isFetching: false
 };
 
 const postsReducer = function(state = initialState, action) {
