@@ -1,8 +1,13 @@
 import { expect } from 'chai'
-import { Map } from 'immutable';
 import * as actions from '../../src/actions/authAction';
 import * as reducers from '../../src/reducers/authReducer';
 import * as types from '../../src/constants/authConst';
+
+const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpZCI6MSwiZW1haWwiOiJzcG9uZGJvYkBlYW1jYS5jb20iLCJjcmVhdGVkX2F0IjoiMjAxNi0wOS0wMlQxMToyMzoxMy4wNzNaIiwidXBkYXRlZF9hdCI6IjIwMTYtMDktMDVUMDU6MTc6NDUuMDU3WiIsImZpcnN0X25hbWUiOiJXYXRzb24iLCJsYXN0X25hbWUiOiJSZWljaGVydCIsInBob25lIjoiKDk4MSkgMTY0LTY5ODkifQ."
+const error = {
+  status: 403,
+  statusText: 'Invalid token'
+}
 
 describe('[Redux] - Auth: actions', () => {
   it('should create an action when signing in users', () => {
@@ -14,8 +19,6 @@ describe('[Redux] - Auth: actions', () => {
   });
 
   it('should create an action when signed in users successfully', () => {
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpZCI6MSwiZW1haWwiOiJzcG9uZGJvYkBlYW1jYS5jb20iLCJjcmVhdGVkX2F0IjoiMjAxNi0wOS0wMlQxMToyMzoxMy4wNzNaIiwidXBkYXRlZF9hdCI6IjIwMTYtMDktMDVUMDU6MTc6NDUuMDU3WiIsImZpcnN0X25hbWUiOiJXYXRzb24iLCJsYXN0X25hbWUiOiJSZWljaGVydCIsInBob25lIjoiKDk4MSkgMTY0LTY5ODkifQ."
-
     const expectedAction = {
       type: types.SIGNIN_USER_SUCCESS,
       payload:
@@ -28,21 +31,9 @@ describe('[Redux] - Auth: actions', () => {
   });
 
   it('should create an action when failed to sign in users', () => {
-    const error = {
-      response:
-      {
-        status: 403,
-        statusText: 'Invalid token'
-      }
-    }
-
     const expectedAction = {
       type: types.SIGNIN_USER_FAILURE,
-      payload:
-      {
-        status: error.response.status,
-        statusText: error.response.statusText
-      }
+      payload: error
     }
 
     expect(actions.signInUserFailure(error)).to.deep.equal(expectedAction);
@@ -98,9 +89,7 @@ describe('[Redux] - Auth: reducers', () => {
     ).to.deep.equal(expectedReducer);
   });
 
-  it('should handle SIGNIN_USER_SUCCESS', () => {
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpZCI6MSwiZW1haWwiOiJzcG9uZGJvYkBlYW1jYS5jb20iLCJjcmVhdGVkX2F0IjoiMjAxNi0wOS0wMlQxMToyMzoxMy4wNzNaIiwidXBkYXRlZF9hdCI6IjIwMTYtMDktMDVUMDU6MTc6NDUuMDU3WiIsImZpcnN0X25hbWUiOiJXYXRzb24iLCJsYXN0X25hbWUiOiJSZWljaGVydCIsInBob25lIjoiKDk4MSkgMTY0LTY5ODkifQ."
-    
+  it('should handle SIGNIN_USER_SUCCESS', () => {    
     const expectedReducer = {
       token: token,
       isAuthenticated: true,
@@ -125,19 +114,11 @@ describe('[Redux] - Auth: reducers', () => {
   });
 
   it('should handle SIGNIN_USER_FAILURE', () => {
-    const error = {
-      response:
-      {
-        status: 403,
-        statusText: 'Invalid token'
-      }
-    }
-
     const expectedReducer = {
       'isAuthenticating': false,
       'isAuthenticated': false,
       'token': null,
-      'statusText': `Authentication Error: ${error.response.status} ${error.response.statusText}`,
+      'statusText': 'Authentication Error: 403 Invalid token',
       'user': {
         'id': null,
         'first_name': null,
@@ -149,10 +130,7 @@ describe('[Redux] - Auth: reducers', () => {
     expect(
       reducers.default(undefined, {
         type: types.SIGNIN_USER_FAILURE,
-        payload: {
-          status: error.response.status,
-          statusText: error.response.statusText
-        }
+        payload: error
       })
     ).to.deep.equal(expectedReducer);
   });

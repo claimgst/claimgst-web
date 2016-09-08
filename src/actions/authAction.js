@@ -16,8 +16,8 @@ export const signInUserFailure = (error) => {
   return {
     type: SIGNIN_USER_FAILURE,
     payload: {
-      status: error.response.status,
-      statusText: error.response.statusText
+      status: error.status,
+      statusText: error.statusText
     }
   }
 }
@@ -101,7 +101,7 @@ export const fetchProtectedData = (token) => {
       dispatch(receiveProtectedData(response.data));
     })
     .catch(error => {
-      if(error.response.status === 401) {
+      if(error.status === 401) {
         dispatch(signInUserFailure(error));
         dispatch(push('/sign_in'));
       }
