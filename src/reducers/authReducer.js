@@ -51,7 +51,7 @@ const authReducer = function(state = initialState, action) {
           'isAuthenticating': false,
           'isAuthenticated': false,
           'token': null,
-          'statusText': `Authentication Error: ${action.status} ${action.statusText}`,
+          'statusText': `Authentication Error: ${action.payload.status} ${action.payload.statusText}`,
           'user': {
             'id': null,
             'first_name': null,
@@ -65,6 +65,7 @@ const authReducer = function(state = initialState, action) {
         {},
         state,
         {
+          'isAuthenticating': false,
           'isAuthenticated': false,
           'token': null,
           'statusText': 'You have been successfully logged out.',
