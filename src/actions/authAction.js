@@ -1,7 +1,7 @@
 import { SIGNIN_USER_REQUEST, SIGNIN_USER_FAILURE, SIGNIN_USER_SUCCESS, SIGNOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA } from '../constants/authConst';
 import { push } from 'react-router-redux';
 import jwtDecode from 'jwt-decode';
-import { fetchUser } from '../apis/authApi';
+import * as api from '../apis/authApi';
 
 export const signInUserSuccess = (token) => {
   localStorage.setItem('token', token);
@@ -51,7 +51,7 @@ export const parseJSON = (response) => {
 export const signInUser = (email, password, redirect="/dashboard") => {
   return function(dispatch) {
     dispatch(signInUserRequest());
-    return fetchUser(email, password)
+    return api.fetchUser(email, password)
     // .then(checkHttpStatus)
     .then(parseJSON)
     .then(response => {
