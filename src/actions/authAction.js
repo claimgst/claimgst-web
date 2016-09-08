@@ -3,7 +3,7 @@ import { push } from 'react-router-redux';
 import jwtDecode from 'jwt-decode';
 import { fetchUser } from '../apis/authApi';
 
-export function signInUserSuccess(token) {
+export const signInUserSuccess = (token) => {
   localStorage.setItem('token', token);
   return {
     type: SIGNIN_USER_SUCCESS,
@@ -13,7 +13,7 @@ export function signInUserSuccess(token) {
   }
 }
 
-export function signInUserFailure(error) {
+export const signInUserFailure = (error) => {
   localStorage.removeItem('token');
   return {
     type: SIGNIN_USER_FAILURE,
@@ -24,31 +24,31 @@ export function signInUserFailure(error) {
   }
 }
 
-export function signInUserRequest() {
+export const signInUserRequest = () => {
   return {
     type: SIGNIN_USER_REQUEST
   }
 }
 
-export function signOut() {
+export const signOut = () => {
   localStorage.removeItem('token');
   return {
     type: SIGNOUT_USER
   }
 }
 
-export function signOutAndRedirect() {
+export const signOutAndRedirect = () => {
   return (dispatch, state) => {
     dispatch(signOut());
     dispatch(push('/'));
   }
 }
 
-export function parseJSON(response) {
+export const parseJSON = (response) => {
   return response.json()
 }
 
-export function signInUser(email, password, redirect="/dashboard") {
+export const signInUser = (email, password, redirect="/dashboard") => {
   return function(dispatch) {
     dispatch(signInUserRequest());
     return fetchUser(email, password)
@@ -74,7 +74,7 @@ export function signInUser(email, password, redirect="/dashboard") {
   }
 }
 
-export function receiveProtectedData(data) {
+export const receiveProtectedData = (data) => {
   return {
     type: RECEIVE_PROTECTED_DATA,
     payload: {
@@ -83,14 +83,13 @@ export function receiveProtectedData(data) {
   }
 }
 
-export function fetchProtectedDataRequest() {
+export const fetchProtectedDataRequest = () => {
   return {
     type: FETCH_PROTECTED_DATA_REQUEST
   }
 }
 
-export function fetchProtectedData(token) {
-
+export const fetchProtectedData = (token) => {
   return (dispatch, state) => {
     dispatch(fetchProtectedDataRequest());
     return fetch('http://localhost:3000/getData/', {
