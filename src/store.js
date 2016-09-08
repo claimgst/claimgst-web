@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { browserHistory } from 'react-router';
 import { routerMiddleware } from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
+import localStorageMiddleware from './middleware/localStorageMiddleware'
 import createLogger from 'redux-logger'
 import reducers from './reducers';
 
@@ -11,6 +12,7 @@ const reactRouterReduxMiddleware = routerMiddleware(browserHistory)
 const createStoreWithMiddleware  = compose(
   applyMiddleware(
     thunkMiddleware, // lets us dispatch() functions
+    localStorageMiddleware,
     reactRouterReduxMiddleware,
     createLogger() // neat middleware that logs actions
   ),

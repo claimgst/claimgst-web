@@ -4,7 +4,6 @@ import jwtDecode from 'jwt-decode';
 import * as api from '../apis/authApi';
 
 export const signInUserSuccess = (token) => {
-  localStorage.setItem('token', token);
   return {
     type: SIGNIN_USER_SUCCESS,
     payload: {
@@ -14,7 +13,6 @@ export const signInUserSuccess = (token) => {
 }
 
 export const signInUserFailure = (error) => {
-  localStorage.removeItem('token');
   return {
     type: SIGNIN_USER_FAILURE,
     payload: {
@@ -31,7 +29,6 @@ export const signInUserRequest = () => {
 }
 
 export const signOut = () => {
-  localStorage.removeItem('token');
   return {
     type: SIGNOUT_USER
   }
