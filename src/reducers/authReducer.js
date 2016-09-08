@@ -33,7 +33,7 @@ const authReducer = function(state = initialState, action) {
         {
           'isAuthenticating': false,
           'isAuthenticated': true,
-          'token': action.token,
+          'token': action.payload.token,
           'statusText': 'You have been successfully logged in.',
           'user': {
             'id': decoded.id,
