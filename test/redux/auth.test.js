@@ -9,11 +9,12 @@ describe('[Redux] - Auth: actions', () => {
     const expectedAction = {
       type: types.SIGNIN_USER_REQUEST
     }
+
     expect(actions.signInUserRequest()).to.deep.equal(expectedAction);
   });
 
-  xit('should create an action when signed in users successfully', () => {
-    let token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpZCI6MSwiZW1haWwiOiJzcG9uZGJvYkBlYW1jYS5jb20iLCJjcmVhdGVkX2F0IjoiMjAxNi0wOS0wMlQxMToyMzoxMy4wNzNaIiwidXBkYXRlZF9hdCI6IjIwMTYtMDktMDVUMDU6MTc6NDUuMDU3WiIsImZpcnN0X25hbWUiOiJXYXRzb24iLCJsYXN0X25hbWUiOiJSZWljaGVydCIsInBob25lIjoiKDk4MSkgMTY0LTY5ODkifQ."
+  it('should create an action when signed in users successfully', () => {
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpZCI6MSwiZW1haWwiOiJzcG9uZGJvYkBlYW1jYS5jb20iLCJjcmVhdGVkX2F0IjoiMjAxNi0wOS0wMlQxMToyMzoxMy4wNzNaIiwidXBkYXRlZF9hdCI6IjIwMTYtMDktMDVUMDU6MTc6NDUuMDU3WiIsImZpcnN0X25hbWUiOiJXYXRzb24iLCJsYXN0X25hbWUiOiJSZWljaGVydCIsInBob25lIjoiKDk4MSkgMTY0LTY5ODkifQ."
 
     const expectedAction = {
       type: types.SIGNIN_USER_SUCCESS,
@@ -22,10 +23,11 @@ describe('[Redux] - Auth: actions', () => {
         token: token
       }
     }
-    expect(actions.signInUserSuccess()).to.deep.equal(expectedAction);
+
+    expect(actions.signInUserSuccess(token)).to.deep.equal(expectedAction);
   });
 
-  xit('should create an action when failed to sign in users', () => {
+  it('should create an action when failed to sign in users', () => {
     const error = {
       response:
       {
@@ -38,33 +40,140 @@ describe('[Redux] - Auth: actions', () => {
       type: types.SIGNIN_USER_FAILURE,
       payload:
       {
-        status: error.status,
-        statusText: error.statusText
+        status: error.response.status,
+        statusText: error.response.statusText
       }
     }
+
     expect(actions.signInUserFailure(error)).to.deep.equal(expectedAction);
+  });
+
+  it('should create an action when signing out users', () => {
+    const expectedAction = {
+      type: types.SIGNOUT_USER
+    }
+
+    expect(actions.signOut()).to.deep.equal(expectedAction);
   });
 });
 
-xdescribe('[Redux] - Auth: reducers', () => {
+describe('[Redux] - Auth: reducers', () => {
   it('should return the initial state', () => {
     const expectedReducer = {
-      posts: [],
-      isFetching: false
-    }
+      token: null,
+      isAuthenticated: false,
+      isAuthenticating: false,
+      statusText: null,
+      user: {
+        id: null,
+        first_name: null,
+        last_name: null,
+        email: null
+      }
+    };
+
     expect(
       reducers.default(undefined, {})
     ).to.deep.equal(expectedReducer);
   });
 
-  it('should handle FETCHING_POSTS', () => {
+  it('should handle SIGNIN_USER_REQUEST', () => {
     const expectedReducer = {
-      posts: [],
-      isFetching: true
-    }
+      token: null,
+      isAuthenticated: false,
+      isAuthenticating: true,
+      statusText: null,
+      user: {
+        id: null,
+        first_name: null,
+        last_name: null,
+        email: null
+      }
+    };
+
     expect(
       reducers.default(undefined, {
-        type: types.FETCHING_POSTS
+        type: types.SIGNIN_USER_REQUEST
+      })
+    ).to.deep.equal(expectedReducer);
+  });
+
+  it('should handle SIGNIN_USER_SUCCESS', () => {
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpZCI6MSwiZW1haWwiOiJzcG9uZGJvYkBlYW1jYS5jb20iLCJjcmVhdGVkX2F0IjoiMjAxNi0wOS0wMlQxMToyMzoxMy4wNzNaIiwidXBkYXRlZF9hdCI6IjIwMTYtMDktMDVUMDU6MTc6NDUuMDU3WiIsImZpcnN0X25hbWUiOiJXYXRzb24iLCJsYXN0X25hbWUiOiJSZWljaGVydCIsInBob25lIjoiKDk4MSkgMTY0LTY5ODkifQ."
+    
+    const expectedReducer = {
+      token: token,
+      isAuthenticated: true,
+      isAuthenticating: false,
+      statusText: 'You have been successfully logged in.',
+      user: {
+        id: 1,
+        first_name: 'Watson',
+        last_name: 'Reichert',
+        email: 'spondbob@eamca.com'
+      }
+    };
+
+    expect(
+      reducers.default(undefined, {
+        type: types.SIGNIN_USER_SUCCESS,
+        payload: {
+          token: token
+        }
+      })
+    ).to.deep.equal(expectedReducer);
+  });
+
+  it('should handle SIGNIN_USER_FAILURE', () => {
+    const error = {
+      response:
+      {
+        status: 403,
+        statusText: 'Invalid token'
+      }
+    }
+
+    const expectedReducer = {
+      'isAuthenticating': false,
+      'isAuthenticated': false,
+      'token': null,
+      'statusText': `Authentication Error: ${error.response.status} ${error.response.statusText}`,
+      'user': {
+        'id': null,
+        'first_name': null,
+        'last_name': null,
+        'email': null
+      }
+    }
+
+    expect(
+      reducers.default(undefined, {
+        type: types.SIGNIN_USER_FAILURE,
+        payload: {
+          status: error.response.status,
+          statusText: error.response.statusText
+        }
+      })
+    ).to.deep.equal(expectedReducer);
+  });
+
+  it('should handle SIGNOUT_USER', () => {
+    const expectedReducer = {
+      'isAuthenticating': false,
+      'isAuthenticated': false,
+      'token': null,
+      'statusText': 'You have been successfully logged out.',
+      'user': {
+        'id': null,
+        'first_name': null,
+        'last_name': null,
+        'email': null
+      }
+    }
+
+    expect(
+      reducers.default(undefined, {
+        type: types.SIGNOUT_USER
       })
     ).to.deep.equal(expectedReducer);
   });
