@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import reducers from './reducers';
 
+// react-router-redux middleware
 const reactRouterReduxMiddleware = routerMiddleware(browserHistory)
 
 const createStoreWithMiddleware  = compose(
