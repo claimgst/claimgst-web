@@ -7,12 +7,13 @@ claimgst-web
 ClaimGST allows users to achieve minimum amount required to claim GST of their goods by sharing the receipts from the same ABN.
 
 ### Stacks
-- ReactJS
-- react-router
-- react-redux
-- [JWT](https://github.com/auth0/jwt-decode)
-- Webpack, Babel
-- Docker
+- React: The javascript library
+- react-router: Mapping requests to the actual components
+- react-redux: State management
+- [JWT](https://github.com/auth0/jwt-decode): Industry standard token format
+- Webpack & Babel: Javascript bundler
+- Docker: Isolating applications and setting up required environment
+- Mocha & Chai: JS test framework and assertion library
 
 ### Architecture
 The project is separated into two layers, front-end and back-end, to provide isolated systems for each layer that communicates through RESTful API.
