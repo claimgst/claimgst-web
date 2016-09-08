@@ -1,5 +1,5 @@
 export const fetchUser = (email, password) => {
-  return fetch(`http://localhost:3000/users/sign_in/`, {
+  let config = {
     method: 'post',
     credentials: 'include',
     headers: {
@@ -7,5 +7,7 @@ export const fetchUser = (email, password) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({email: email, password: password})
-  })
+  }
+  
+  return fetch(`http://localhost:3000/users/sign_in/`, config)
 }
